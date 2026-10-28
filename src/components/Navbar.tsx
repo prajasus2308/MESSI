@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, Sparkles, Globe } from 'lucide-react';
 import { stadiumAudio } from './AudioAmbience';
 import { playHoverSound, playClickSound } from '../utils/audio';
+import { translations, Language } from '../utils/translations';
 
 interface NavbarProps {
   onOpenSection: (section: 'journey' | 'stats' | 'trophies' | 'argentina' | 'legacy') => void;
   activeLighting: 'night' | 'glory' | 'classic';
   onChangeLighting: (mode: 'night' | 'glory' | 'classic') => void;
+  language: Language;
+  onChangeLanguage: (lang: Language) => void;
 }
 
-export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: NavbarProps) {
+export function Navbar({ onOpenSection, activeLighting, onChangeLighting, language, onChangeLanguage }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [audioActive, setAudioActive] = useState(false);
+  const t = translations[language];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +43,12 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
     } else {
       onOpenSection(sectionId);
     }
+  };
+
+  const cycleLanguage = () => {
+    const languages: Language[] = ['en', 'es', 'arg'];
+    const nextIndex = (languages.indexOf(language) + 1) % languages.length;
+    onChangeLanguage(languages[nextIndex]);
   };
 
   return (
@@ -78,7 +88,7 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
             onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
-            Home
+            {t.nav.home}
           </button>
           <span className="text-white/20 select-none">·</span>
 
@@ -98,7 +108,7 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
             onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
-            Stats
+            {t.nav.stats}
           </button>
           <span className="text-white/20 select-none">·</span>
 
@@ -128,12 +138,24 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
             onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
-            Legacy
+            {t.nav.legacy}
           </button>
         </nav>
 
         {/* Right utility actions */}
         <div className="flex items-center gap-3">
+          {/* Language toggle */}
+          <button
+            id="language-toggle"
+            onClick={() => { playClickSound(); cycleLanguage(); }}
+            onMouseEnter={playHoverSound}
+            title={`Current language: ${language.toUpperCase()}`}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] uppercase font-editorial tracking-[0.2em] bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/80 transition-all duration-300 cursor-pointer"
+          >
+            <Globe className="w-3 h-3 text-[#E5C158]" />
+            <span className="hidden sm:inline">{language}</span>
+          </button>
+
           {/* Lighting Mode toggle */}
           <button
             id="lighting-mode-toggle"

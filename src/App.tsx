@@ -18,12 +18,14 @@ import { StatsModal } from './components/StatsModal';
 import { LegacyModal } from './components/LegacyModal';
 import { MessiMomentsToast } from './components/MessiMomentsToast';
 import { FloatingNav } from './components/FloatingNav';
+import { Language } from './utils/translations';
 
 export default function App() {
   const [statsOpen, setStatsOpen] = useState(false);
   const [legacyOpen, setLegacyOpen] = useState(false);
   const [legacyTab, setLegacyTab] = useState<'journey' | 'trophies' | 'argentina' | 'legacy'>('journey');
   const [lightingMode, setLightingMode] = useState<'night' | 'glory' | 'classic'>('night');
+  const [language, setLanguage] = useState<Language>('en');
 
   // Framer Motion Page Scroll Progress Bar
   const { scrollYProgress } = useScroll();
@@ -33,12 +35,21 @@ export default function App() {
     restDelta: 0.001,
   });
 
-  // Handle ESC key to dismiss modals
+  // Handle keys for interaction
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setStatsOpen(false);
         setLegacyOpen(false);
+      }
+      if (e.key.toLowerCase() === 's') {
+        setStatsOpen(true);
+      }
+      if (e.key.toLowerCase() === 'l') {
+        setLegacyOpen(true);
+      }
+      if (e.key.toLowerCase() === 'h') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -77,6 +88,8 @@ export default function App() {
         onOpenSection={handleOpenSection}
         activeLighting={lightingMode}
         onChangeLighting={setLightingMode}
+        language={language}
+        onChangeLanguage={setLanguage}
       />
 
       {/* Cinematic Argentina x Lionel Messi Hero Poster */}
