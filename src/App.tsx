@@ -17,6 +17,7 @@ import { FinalFooter } from './components/FinalFooter';
 import { StatsModal } from './components/StatsModal';
 import { LegacyModal } from './components/LegacyModal';
 import { MessiMomentsToast } from './components/MessiMomentsToast';
+import { FloatingNav } from './components/FloatingNav';
 
 export default function App() {
   const [statsOpen, setStatsOpen] = useState(false);
@@ -151,6 +152,7 @@ export default function App() {
         onClose={() => setLegacyOpen(false)}
       />
       <MessiMomentsToast />
+      <FloatingNav />
     </div>
   );
 }

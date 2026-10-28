@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Trophy, Award, Target, Flame, ChevronRight, Zap } from 'lucide-react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from './ScrollReveal';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export function StatsSection({ onOpenDeepStats }: { onOpenDeepStats: () => void }) {
   const [activeStatTab, setActiveStatTab] = useState<'all' | 'club' | 'argentina'>('all');
+
+  const chartData = [
+    { year: '2004', goals: 1 }, { year: '2006', goals: 10 }, { year: '2008', goals: 20 },
+    { year: '2010', goals: 60 }, { year: '2012', goals: 91 }, { year: '2014', goals: 58 },
+    { year: '2016', goals: 59 }, { year: '2018', goals: 51 }, { year: '2020', goals: 27 },
+    { year: '2022', goals: 35 }, { year: '2024', goals: 25 },
+  ];
 
   const mainPillars = [
     {
@@ -110,7 +118,7 @@ export function StatsSection({ onOpenDeepStats }: { onOpenDeepStats: () => void 
         </ScrollReveal>
 
         {/* 4 Main Numerical Pillars */}
-        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
+        <StaggerContainer staggerDelay={0.12} className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12">
           {mainPillars.map((pillar, idx) => (
             <StaggerItem key={idx}>
               <div
@@ -141,6 +149,23 @@ export function StatsSection({ onOpenDeepStats }: { onOpenDeepStats: () => void 
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        {/* Goal Contributions Chart */}
+        <div className="h-[300px] w-full mb-16 p-6 rounded-2xl bg-white/[0.02] border border-white/10">
+          <h3 className="font-bebas text-lg tracking-wide text-white mb-6">ANNUAL GOAL CONTRIBUTIONS</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+              <XAxis dataKey="year" stroke="#ffffff60" tick={{ fontSize: 10 }} />
+              <YAxis stroke="#ffffff60" tick={{ fontSize: 10 }} />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#03060c', border: '1px solid #75AADB30', borderRadius: '8px' }}
+                itemStyle={{ color: '#E5C158' }}
+              />
+              <Line type="monotone" dataKey="goals" stroke="#E5C158" strokeWidth={3} dot={{ fill: '#E5C158' }} activeDot={{ r: 6 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
 
         {/* Extraordinary Records Grid */}
         <ScrollReveal direction="up" distance={35} delay={0.15}>

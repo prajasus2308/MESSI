@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation, useSpring, useTransform } from 'motion/react';
 
-function Counter({ value, label }: { value: number; label: string }) {
+interface CounterProps {
+  value: number;
+  label: string;
+}
+
+const Counter: React.FC<CounterProps> = ({ value, label }) => {
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
@@ -30,7 +35,7 @@ function Counter({ value, label }: { value: number; label: string }) {
       </div>
     </div>
   );
-}
+};
 
 export function AchievementCounter() {
   const stats = [
