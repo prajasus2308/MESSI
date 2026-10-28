@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Sparkles } from 'lucide-react';
 import { stadiumAudio } from './AudioAmbience';
+import { playHoverSound, playClickSound } from '../utils/audio';
 
 interface NavbarProps {
   onOpenSection: (section: 'journey' | 'stats' | 'trophies' | 'argentina' | 'legacy') => void;
@@ -73,7 +74,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
         <nav className="hidden md:flex items-center gap-1.5 lg:gap-2 text-[11px] font-editorial uppercase tracking-[0.25em] text-white/70">
           <button
             id="nav-home-btn"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => { playClickSound(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Home
@@ -82,7 +84,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
 
           <button
             id="nav-journey-btn"
-            onClick={() => scrollToSection('journey')}
+            onClick={() => { playClickSound(); scrollToSection('journey'); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Journey
@@ -91,7 +94,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
 
           <button
             id="nav-stats-btn"
-            onClick={() => scrollToSection('stats')}
+            onClick={() => { playClickSound(); scrollToSection('stats'); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Stats
@@ -100,7 +104,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
 
           <button
             id="nav-trophies-btn"
-            onClick={() => scrollToSection('trophies')}
+            onClick={() => { playClickSound(); scrollToSection('trophies'); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Trophies
@@ -109,7 +114,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
 
           <button
             id="nav-argentina-btn"
-            onClick={() => scrollToSection('argentina')}
+            onClick={() => { playClickSound(); scrollToSection('argentina'); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Argentina
@@ -118,7 +124,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
 
           <button
             id="nav-legacy-btn"
-            onClick={() => scrollToSection('legacy')}
+            onClick={() => { playClickSound(); scrollToSection('legacy'); }}
+            onMouseEnter={playHoverSound}
             className="px-3 py-1.5 rounded-full hover:text-[#A3D2F7] hover:bg-white/[0.04] transition-all duration-300 cursor-pointer"
           >
             Legacy
@@ -130,7 +137,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
           {/* Lighting Mode toggle */}
           <button
             id="lighting-mode-toggle"
-            onClick={cycleLighting}
+            onClick={() => { playClickSound(); cycleLighting(); }}
+            onMouseEnter={playHoverSound}
             title={`Current lighting: ${activeLighting.toUpperCase()}. Click to cycle atmospheric grade.`}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] uppercase font-editorial tracking-[0.2em] bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/80 transition-all duration-300 cursor-pointer"
           >
@@ -141,7 +149,8 @@ export function Navbar({ onOpenSection, activeLighting, onChangeLighting }: Navb
           {/* Sound toggle */}
           <button
             id="audio-ambience-toggle"
-            onClick={toggleSound}
+            onClick={() => { playClickSound(); toggleSound(); }}
+            onMouseEnter={playHoverSound}
             title={audioActive ? 'Mute stadium sound' : 'Enable cinematic ambient sound'}
             className={`p-2 rounded-full border transition-all duration-300 cursor-pointer ${
               audioActive

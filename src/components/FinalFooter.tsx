@@ -2,6 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion, useMotionValue, useMotionTemplate } from 'motion/react';
 import { ArrowUp, Heart, Trophy, Globe, Sparkles, Star } from 'lucide-react';
 import { StadiumParticlesCanvas } from './StadiumParticlesCanvas';
+import { playHoverSound, playClickSound } from '../utils/audio';
 
 interface FinalFooterProps {
   onNavigateSection?: (section: 'home' | 'journey' | 'barcelona' | 'argentina' | 'worldcup' | 'trophies' | 'legacy') => void;
@@ -466,7 +467,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[10px] sm:text-[11px] font-editorial uppercase tracking-[0.25em] text-white/50"
           >
             <button
-              onClick={() => handleNavClick('home')}
+              onClick={() => { playClickSound(); handleNavClick('home'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-white transition-colors cursor-pointer"
             >
               Home
@@ -474,7 +476,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('journey')}
+              onClick={() => { playClickSound(); handleNavClick('journey'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-[#75AADB] transition-colors cursor-pointer"
             >
               Journey
@@ -482,7 +485,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('barcelona')}
+              onClick={() => { playClickSound(); handleNavClick('barcelona'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-[#75AADB] transition-colors cursor-pointer"
             >
               Barcelona
@@ -490,7 +494,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('argentina')}
+              onClick={() => { playClickSound(); handleNavClick('argentina'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-[#75AADB] transition-colors cursor-pointer"
             >
               Argentina
@@ -498,7 +503,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('worldcup')}
+              onClick={() => { playClickSound(); handleNavClick('worldcup'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-[#E5C158] transition-colors cursor-pointer"
             >
               World Cup
@@ -506,7 +512,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('trophies')}
+              onClick={() => { playClickSound(); handleNavClick('trophies'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-[#75AADB] transition-colors cursor-pointer"
             >
               Trophies
@@ -514,7 +521,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
             <span className="text-white/15 select-none">·</span>
 
             <button
-              onClick={() => handleNavClick('legacy')}
+              onClick={() => { playClickSound(); handleNavClick('legacy'); }}
+              onMouseEnter={playHoverSound}
               className="hover:text-white transition-colors cursor-pointer"
             >
               Legacy
@@ -523,7 +531,8 @@ export function FinalFooter({ onNavigateSection }: FinalFooterProps) {
 
           {/* Smooth Back-to-Top Button */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => { playClickSound(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            onMouseEnter={playHoverSound}
             id="final-back-to-top-btn"
             className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 hover:border-[#75AADB]/50 bg-white/[0.02] hover:bg-white/[0.06] text-[10px] font-editorial tracking-[0.2em] uppercase text-white/60 hover:text-white transition-all cursor-pointer"
           >

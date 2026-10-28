@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'motion/react';
+import { playHoverSound, playClickSound } from '../utils/audio';
 
 export function InteractiveGlassCard({ children, className = "", highlight = false }: { children: React.ReactNode, className?: string, highlight?: boolean }) {
   const mouseX = useMotionValue(0);
@@ -14,6 +15,8 @@ export function InteractiveGlassCard({ children, className = "", highlight = fal
   return (
     <motion.div
       onMouseMove={handleMouseMove}
+      onMouseEnter={playHoverSound}
+      onClick={playClickSound}
       className={`relative group p-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${className}`}
       style={{
         background: useMotionTemplate`radial-gradient(250px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.08), transparent 80%), rgba(255,255,255,0.02)`

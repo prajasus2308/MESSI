@@ -11,6 +11,7 @@ import { StatsSection } from './components/StatsSection';
 import { JourneySection } from './components/JourneySection';
 import { ArgentinaSection } from './components/ArgentinaSection';
 import { TrophiesSection } from './components/TrophiesSection';
+import { AchievementCounter } from './components/AchievementCounter';
 import { QuotesSection } from './components/QuotesSection';
 import { FinalFooter } from './components/FinalFooter';
 import { StatsModal } from './components/StatsModal';
@@ -115,6 +116,8 @@ export default function App() {
         <ArgentinaSection onOpenArgentinaDetails={() => handleDeepDive('argentina')} />
 
         <TrophiesSection onOpenTrophiesModal={() => handleDeepDive('trophies')} />
+
+        <AchievementCounter />
 
         <QuotesSection />
 
