@@ -7,11 +7,21 @@ interface HeroPosterProps {
   onExploreLegacy: () => void;
   onOpenStats: () => void;
   lightingMode: 'night' | 'glory' | 'classic';
+  cameraFilter: 'none' | 'vintage' | 'stadium' | 'bw';
+  onChangeFilter: (filter: 'none' | 'vintage' | 'stadium' | 'bw') => void;
   onSelectLegacyTab?: (tab: 'journey' | 'trophies' | 'argentina' | 'legacy') => void;
 }
 
-export function HeroPoster({ onExploreLegacy, onOpenStats, lightingMode, onSelectLegacyTab }: HeroPosterProps) {
+export function HeroPoster({ onExploreLegacy, onOpenStats, lightingMode, cameraFilter, onChangeFilter, onSelectLegacyTab }: HeroPosterProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Filter Styles
+  const filterStyles: Record<string, string> = {
+    none: 'brightness(1.03) contrast(1.05)',
+    vintage: 'sepia(0.5) contrast(0.9) saturate(0.8) brightness(1.05)',
+    stadium: 'brightness(1.2) contrast(1.1) saturate(1.2) hue-rotate(-10deg)',
+    bw: 'grayscale(1) contrast(1.2)',
+  };
 
   // Mouse Parallax values
   const mouseX = useMotionValue(0);
@@ -286,7 +296,8 @@ export function HeroPoster({ onExploreLegacy, onOpenStats, lightingMode, onSelec
             src="/messi.png"
             alt="Lionel Messi in Argentina National Team Kit"
             referrerPolicy="no-referrer"
-            className="relative z-20 object-contain w-auto h-[62vh] sm:h-[68vh] md:h-[74vh] lg:h-[78vh] xl:h-[82vh] max-h-[880px] drop-shadow-[0_25px_60px_rgba(0,0,0,0.85)] filter brightness-[1.03] contrast-[1.05] transition-all duration-300 [mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)]"
+            className="relative z-20 object-contain w-auto h-[62vh] sm:h-[68vh] md:h-[74vh] lg:h-[78vh] xl:h-[82vh] max-h-[880px] drop-shadow-[0_25px_60px_rgba(0,0,0,0.85)] transition-all duration-500 [mask-image:linear-gradient(to_bottom,black_82%,transparent_100%)]"
+            style={{ filter: filterStyles[cameraFilter] }}
           />
 
           {/* Bottom subtle radial gradient blend to ensure zero harsh edges */}
@@ -397,7 +408,23 @@ export function HeroPoster({ onExploreLegacy, onOpenStats, lightingMode, onSelec
 
           {/* Primary Action Buttons */}
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 sm:gap-4">
-            {/* Primary CTA: EXPLORE THE LEGACY → */}
+            {/* Filter Selection Toggle */}
+           <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm p-1 rounded-full border border-white/5 mb-3">
+             {(['none', 'vintage', 'stadium', 'bw'] as const).map((f) => (
+               <button
+                 key={f}
+                 onClick={() => onChangeFilter(f)}
+                 className={`px-3 py-1 rounded-full text-[9px] uppercase tracking-[0.15em] transition-all duration-300 ${
+                   cameraFilter === f
+                     ? 'bg-[#75AADB]/20 text-[#D8ECF8] border border-[#75AADB]/30'
+                     : 'text-white/40 hover:text-white/70'
+                 }`}
+               >
+                 {f}
+               </button>
+             ))}
+           </div>
+           {/* Primary CTA: EXPLORE THE LEGACY → */}
             <button
               id="cta-explore-legacy"
               onClick={onExploreLegacy}

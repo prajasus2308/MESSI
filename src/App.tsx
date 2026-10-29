@@ -21,6 +21,7 @@ import { FloatingNav } from './components/FloatingNav';
 import { Language } from './utils/translations';
 
 export default function App() {
+  const [cameraFilter, setCameraFilter] = useState<'none' | 'vintage' | 'stadium' | 'bw'>('none');
   const [statsOpen, setStatsOpen] = useState(false);
   const [legacyOpen, setLegacyOpen] = useState(false);
   const [legacyTab, setLegacyTab] = useState<'journey' | 'trophies' | 'argentina' | 'legacy'>('journey');
@@ -56,6 +57,16 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Handle mouse movement for stadium light effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const handleOpenSection = (section: 'journey' | 'stats' | 'trophies' | 'argentina' | 'legacy') => {
     const el = document.getElementById(section);
     if (el) {
@@ -77,6 +88,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#03060c] text-white selection:bg-[#75AADB]/30 selection:text-white font-editorial">
+      {/* Stadium Cursor Light Effect */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[100] opacity-30 mix-blend-screen transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(600px at var(--cursor-x) var(--cursor-y), #75AADB40, transparent 80%)`,
+        }}
+      />
+      
       {/* Top Scroll Indicator Bar */}
       <motion.div
         style={{ scaleX }}
@@ -120,6 +139,8 @@ export default function App() {
             }
           }}
           lightingMode={lightingMode}
+          cameraFilter={cameraFilter}
+          onChangeFilter={setCameraFilter}
         />
 
         {/* Scroll-Triggered Reveal Component Sections */}
